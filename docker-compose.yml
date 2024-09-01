@@ -1,0 +1,23 @@
+services:
+  redis:
+    image: redis:7-bookworm
+    ports:
+      - "6379:6379"
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite:3.32.0
+    ports:
+      - "10000:10000"
+      - "10001:10001"
+      - "10002:10002"
+  event-hub:
+    image: mcr.microsoft.com/azure-messaging/eventhubs-emulator:latest
+    volumes:
+      - "./Eventhubs_Emulator/ConfigFiles/Config.json:/Eventhubs_Emulator/ConfigFiles/Config.json"
+    ports:
+      - "5672:5672"
+    environment:
+      BLOB_SERVER: azurite
+      METADATA_SERVER: azurite
+      ACCEPT_EULA: 'Y'
+    depends_on:
+      - azurite

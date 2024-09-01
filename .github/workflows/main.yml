@@ -1,0 +1,20 @@
+name: OLTP Experiments
+
+on:
+    push:
+        branches: main
+
+jobs:
+    build-and-test:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Docker Compose Up
+              id: dockerup
+              run: docker compose -f docker-compose.yml up -d
+
+            - name: Docker Compose Down
+              if: steps.dockerup.conclusion == 'success'
+              run: docker compose -f docker-compose.yml down
