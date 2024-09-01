@@ -1,4 +1,4 @@
-name: OLTP Experiments
+name: OTLP Experiments
 
 on:
     push:
